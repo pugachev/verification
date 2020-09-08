@@ -36,7 +36,7 @@
         <!-- Page Content -->
         <div class="container mt-5 p-lg-5 bg-light">
 
-            <form method="post" action="{{ url('/verification', $selectRecord->id) }}">
+            <form method="post" action="{{ url('/verification', $selectRecord->id) }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {{ method_field('patch') }}
                 <!--氏名-->
@@ -89,8 +89,6 @@
             'use strict';
             $('#inputDate').datepicker();
 
-            $('input[type=file]').after('<span></span>');
-
             // アップロードするファイルを選択
             $('#inputFile').change(function() {
             var file = $(this).prop('files')[0];
@@ -99,15 +97,13 @@
                 if (! file.type.match('image.*')) {
                     // クリア
                     $(this).val('');
-                    $('span').html('');
                     return;
                 }
 
                 // 画像表示
                 var reader = new FileReader();
                 reader.onload = function() {
-                    var img_src = $('<img>').attr('src', reader.result);
-                    /* $('#targetImg').html(img_src); */
+                    $('#targetImg')[0].src='';
                     $('#targetImg')[0].src=reader.result;
                 }
                 reader.readAsDataURL(file);

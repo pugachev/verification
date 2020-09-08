@@ -58,6 +58,10 @@ class RecordsController extends Controller
         $record->money = $request->inputMoney;
         $rcvdate = DateTime::createFromFormat('m/d/Y',$request->inputDate);
         $record->targetDate = $rcvdate->format("Y-m-d");
+        $originalImg = $request->inputFile;
+        // dd($originalImg);
+        $filePath = $originalImg->store('public');
+        $record->imgpath = str_replace('public/', '', $filePath);
         $record->result='○';
         $record->save();
         return redirect('/verification');
